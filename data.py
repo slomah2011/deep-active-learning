@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from torchvision import datasets
+from torchsampler import ImbalancedDatasetSampler
 
 class Data:
     def __init__(self, X_train, Y_train, X_test, Y_test, handler):
@@ -58,3 +59,14 @@ def get_CIFAR10(handler):
     data_train = datasets.CIFAR10('./data/CIFAR10', train=True, download=True)
     data_test = datasets.CIFAR10('./data/CIFAR10', train=False, download=True)
     return Data(data_train.data[:40000], torch.LongTensor(data_train.targets)[:40000], data_test.data[:40000], torch.LongTensor(data_test.targets)[:40000], handler)
+
+def get_INBLANCED(handler):
+    from sklearn.datasets import make_classification
+    # Generate an unbalanced dataset
+    X, y = make_classification(n_samples=60000, weights=[0.3, 0.7], random_state=42)
+    data_train = X('./data/INBLANCED', train=True, download=True)
+    data_test = y('./data/INBLANCED', train=False, download=True)
+    return Data(data_train.data[:40000], torch.LongTensor(data_train.targets)[:40000], data_test.data[:40000], torch.LongTensor(data_test.targets)[:40000], handler)
+    
+
+   
